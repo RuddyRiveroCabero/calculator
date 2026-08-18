@@ -1,92 +1,245 @@
-let firstOperand = null;
-let currentOperator = null;
-let waitingForSecondOperand = false;
-let displayValue = '0';
+        let a=0;
+            let b=0;
+            let displayValue="";
+            let operator="";
+            let aPopulated="false";
+            let bPopulated="false";
 
-const display = document.getElementById('displayValue');
 
-function updateDisplay() {
-    display.textContent = displayValue;
-}
+            function add(a,b){
+                return a+b;
+            }
+            //console.log(add(a,b));
+            function substract(a,b){
+                return a-b;
+            }
+            //console.log(substract(a,b));
+            function multiply(a,b){
+                return a*b;
+            }
+            //console.log(multiply(a,b));
+            function divide(a,b){
+                if (b==0){
+                    return "ERROR"
+                } else{
+                    return a/b;
+                }
+            }
+            //console.log(divide(a,b));
+            function operate(operator,a,b){
+                let result;
+                result=(operator=="+")? add(a,b): operator=="-"? substract(a,b):operator=="*"? multiply(a,b):operator=="/"? divide(a,b):a,b;
+                return result;
+            }
+            // populate numbers
+            function populate1(){
+                if (displayValue.length == 18){
 
-function handleNumber(number) {
-    if (waitingForSecondOperand) {
-        displayValue = number;
-        waitingForSecondOperand = false;
-    } else {
-        if (displayValue.length >= 18) return;
-        displayValue = displayValue === '0' ? number : displayValue + number;
-    }
-}
+                } else{
+                    displayValue += "1";
+                    document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate2(){
+                if (displayValue.length == 18){
 
-function handleDecimal() {
-    if (waitingForSecondOperand) {
-        displayValue = '0.';
-        waitingForSecondOperand = false;
-        return;
-    }
-    if (!displayValue.includes('.')) {
-        displayValue += '.';
-    }
-}
+                } else{
+                displayValue += "2";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate3(){
+                if (displayValue.length == 18){
 
-function handleOperator(nextOperator) {
-    const inputValue = parseFloat(displayValue);
+                } else{
+                displayValue += "3";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate4(){
+                if (displayValue.length == 18){
 
-    if (currentOperator && waitingForSecondOperand) {
-        currentOperator = nextOperator;
-        return;
-    }
+                } else{
+                displayValue += "4";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate5(){
+                if (displayValue.length == 18){
 
-    if (firstOperand === null) {
-        firstOperand = inputValue;
-    } else if (currentOperator) {
-        const result = calculate(firstOperand, inputValue, currentOperator);
-        displayValue = String(result).slice(0, 18);
-        firstOperand = result;
-    }
+                } else{
+                displayValue += "5";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate6(){
+                if (displayValue.length == 18){
 
-    waitingForSecondOperand = true;
-    currentOperator = nextOperator;
-}
+                } else{
+                displayValue += "6";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate7(){
+                if (displayValue.length == 18){
 
-function calculate(first, second, operator) {
-    if (operator === '+') return first + second;
-    if (operator === '-') return first - second;
-    if (operator === '*') return first * second;
-    if (operator === '/') return second === 0 ? 'ERROR' : first / second;
-    return second;
-}
+                } else{
+                displayValue += "7";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate8(){
+                if (displayValue.length == 18){
 
-function resetCalculator() {
-    displayValue = '0';
-    firstOperand = null;
-    waitingForSecondOperand = false;
-    currentOperator = null;
-}
+                } else{
+                displayValue += "8";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate9(){
+                if (displayValue.length == 18){
 
-// Delegación de eventos en la calculadora
-document.getElementById('calculator').addEventListener('click', (event) => {
-    const { target } = event;
-    if (!target.matches('button')) return;
+                } else{
+                displayValue += "9";
+                document.getElementById("displayValue").innerHTML = displayValue;
+                }
+            }
+            function populate0(){
+                if (displayValue.length == 18){
 
-    if (target.dataset.number) {
-        handleNumber(target.dataset.number);
-    } else if (target.dataset.operator) {
-        handleOperator(target.dataset.operator);
-    } else if (target.dataset.action === 'decimal') {
-        handleDecimal();
-    } else if (target.dataset.action === 'clear') {
-        resetCalculator();
-    } else if (target.dataset.action === 'calculate') {
-        if (currentOperator && !waitingForSecondOperand) {
-            handleOperator(currentOperator);
-            currentOperator = null;
-        }
-    }
+                } else{
+                    if (displayValue==""){
+                       displayValue="0";
+                       document.getElementById("displayValue").innerHTML = displayValue;
+                    } else{
+                        displayValue += "0";
+                        document.getElementById("displayValue").innerHTML = displayValue;
+                }
+                }   
+            }
+            function populatePeriod(){
+                let hayPunto=false;
+                if (displayValue==""){
+                    displayValue += "0.";
+                    document.getElementById("displayValue").innerHTML = displayValue;
+                } else{
+                    for(let i=0; i<displayValue.length ;i++){
+                        if(displayValue[i]==".") {
+                            hayPunto=true;
+                        };
+                    }
+                    if(hayPunto==false){
+                        displayValue += ".";
+                        document.getElementById("displayValue").innerHTML = displayValue;
+                    }   
 
-    updateDisplay();
-});
+                }   
+            }
+            //populate operators
+            function populateMas(){
+                if (operator!=""){
+                    populateIgual();
+                }
+                if (aPopulated==true){
+                    b=Number(displayValue);
+                    bPopulated=true;
+                    displayValue="";
+                    operator="+";
 
-// Inicializar pantalla
-updateDisplay();
+                } else{
+                    a=Number(displayValue);
+                    aPopulated=true;
+                    displayValue="";
+                    operator="+";
+                }
+                
+            }
+            function populateMenos(){
+                if (operator!=""){
+                    populateIgual();
+                }
+                if (aPopulated==true){
+                    b=Number(displayValue);
+                    bPopulated=true;
+                    displayValue="";
+                    operator="-";
+
+                } else{
+                    a=Number(displayValue);
+                    aPopulated=true;
+                    displayValue="";
+                    operator="-";
+                }
+            }
+            function populatePor(){
+                if (operator!=""){
+                    populateIgual();
+                }
+                if (aPopulated==true){
+                    b=Number(displayValue);
+                    bPopulated=true;
+                    displayValue="";
+                    operator="*";
+
+                } else{
+                    a=Number(displayValue);
+                    aPopulated=true;
+                    displayValue="";
+                    operator="*";
+                }
+            }
+            function populateDividir(){
+                if (operator!=""){
+                    populateIgual();
+                }
+                if (aPopulated==true){
+                    b=Number(displayValue);
+                    bPopulated=true;
+                    displayValue="";
+                    operator="/";
+
+                } else{
+                    a=Number(displayValue);
+                    aPopulated=true;
+                    displayValue="";
+                    operator="/";
+                }
+            }
+            function populateIgual(){
+                if (operator==""){
+
+                } else{
+                    if (aPopulated){
+                        b=Number(displayValue);
+                        displayValue="";
+                        bPopulated="true";
+                        if(aPopulated&&bPopulated){
+                            let resultado = operate(operator,a,b);
+                            console.log(operator+" "+a+" "+b+" "+" "+resultado);
+                            if (resultado.length>18){
+                                //make small the text!!!or use exponencial
+                                document.getElementById("displayValue").innerHTML = resultado;
+                                a=resultado;
+                                aPopulated=true;
+                                operator="";
+                            } else{
+                                document.getElementById("displayValue").innerHTML = resultado;
+                                a=resultado;
+                                aPopulated=true;
+                                operator=""; 
+                            }
+                             
+                        }
+                    }
+                }      
+            }
+            function populateClear(){
+                a=0;
+                b=0;
+                displayValue="";
+                operator="";
+                aPopulated="false";
+                bPopulated="false";
+                document.getElementById("displayValue").innerHTML = "0";
+
+            }
